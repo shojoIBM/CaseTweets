@@ -1,0 +1,14 @@
+{
+	"id":"ICMTweetWidget",
+	"title":"Tweet Widget",
+	"category":"CustomWidgets",
+	"description":"Widget retrieves tweets",
+	"definition":"ICMTweetWidget.json",
+	"preview":"images/comment_preview.png",
+	"icon":"images/comment_icon.png",
+	"runtimeClassName":"icmtweet.pgwidget.ICMTweetWidget",
+	"help":"",
+	"previewThumbnail":"images/comment_thumb.png",
+	"properties":[],
+	"events":[]
+}

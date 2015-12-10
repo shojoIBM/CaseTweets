@@ -1,0 +1,26 @@
+{
+	"Name":"IBM Case Manager Custom Widget Package",
+	"Description":"Custom widget",
+	"Locale":"",
+	"Version":"1.0",
+	"Categories":[
+		{
+			"id":"CustomWidgets",
+			"title":"Custom Widgets"
+		}
+	],
+	"Widgets":[
+		{
+			"id":"ICMTweetWidget",
+			"title":"Tweet Widget",
+			"category":"CustomWidgets",
+			"description":"Widget retrieves tweets",
+			"definition":"ICMTweetWidget.json",
+			"preview":"images/comment_preview.png",
+			"icon":"images/comment_icon.png",
+			"runtimeClassName":"icmtweet.pgwidget.ICMTweetWidget",
+			"help":"",
+			"previewThumbnail":"images/comment_thumb.png"
+		}
+	]
+}
