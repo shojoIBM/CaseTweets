@@ -10,7 +10,7 @@ define([
 		templateString: template,
 
 		postCreate: function(){
-			var test = "this is a test for git";
+			var test = "this is a test for git"
 		}
 	});
 });
