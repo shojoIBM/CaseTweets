@@ -9,8 +9,14 @@ define([
 	return declare("icmtweet.pgwidget.ICMTweetWidget", [_BaseWidget, BasePageWidget], {
 		templateString: template,
 
+		description: "some random widget",
+		
 		postCreate: function(){
 			var test = "this is a test for git";
+		},
+		
+		_onClickTweet: function() {
+			this.tweetButton.style.background = "yellow";
 		}
 	});
 });

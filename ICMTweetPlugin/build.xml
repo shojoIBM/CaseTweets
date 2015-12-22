@@ -17,7 +17,7 @@
 
 	<target name="buildPlugin">
 		<mkdir dir="bin" />
-		<javac target="1.8" source="1.8" destdir="bin" srcdir="src" debug="on" includeantruntime="false">
+		<javac target="1.6" source="1.6" destdir="bin" srcdir="src" debug="on" includeantruntime="false">
 			<classpath>
 				<fileset dir="../lib/">
 				    <include name="**/*.jar" />
