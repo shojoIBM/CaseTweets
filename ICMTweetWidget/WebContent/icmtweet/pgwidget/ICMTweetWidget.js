@@ -9,14 +9,17 @@ define([
 	return declare("icmtweet.pgwidget.ICMTweetWidget", [_BaseWidget, BasePageWidget], {
 		templateString: template,
 
-		description: "some random widget",
+		description: "some OTHER random widget",
+		message: "Please input the hashtag you'd like to search for",
 		
 		postCreate: function(){
-			var test = "this is a test for git";
+			
 		},
 		
 		_onClickTweet: function() {
-			this.tweetButton.style.background = "yellow";
+			this.tweetButton.style.background = "green";
+			this.tweetResults = "These are the tweet results";
+			//this.receiverNode.show();
 		}
 	});
 });
