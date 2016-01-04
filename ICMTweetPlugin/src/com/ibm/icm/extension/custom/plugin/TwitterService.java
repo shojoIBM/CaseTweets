@@ -1,5 +1,7 @@
 package com.ibm.icm.extension.custom.plugin;
 
+import com.ibm.ecm.extension.PluginService;
+import com.ibm.ecm.extension.PluginServiceCallbacks;
 import com.ibm.json.java.JSONArray;
 import com.ibm.json.java.JSONObject;
 
@@ -11,6 +13,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.AuthState;
@@ -24,18 +29,19 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 
 
-public class TwitterService {
+public class TwitterService extends PluginService {
 	
-	private static TwitterService instance = null;
-	
-	protected TwitterService(){
-		//exists only to defeat instantiation
+	@Override
+	public void execute(PluginServiceCallbacks arg0, HttpServletRequest arg1,
+			HttpServletResponse arg2) throws Exception {
+		// TODO Auto-generated method stub
+		
 	}
 	
-	public static TwitterService getInstance() {
-		if(instance == null)
-			instance = new TwitterService();
-		return instance;
+	@Override
+	public String getId() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	public String getSampleTweets(JSONObject twitterCredentials, String outputName, String searchTerms) {
@@ -72,5 +78,4 @@ public class TwitterService {
 		
 		return retrievedTweets.toString();
 	}
-
 }

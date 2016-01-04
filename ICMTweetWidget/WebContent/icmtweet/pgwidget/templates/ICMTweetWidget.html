@@ -1,13 +1,12 @@
 <div class="icmICMTweetWidget" data-dojo-type="dijit.layout.BorderContainer">	
 	<div data-dojo-type="dijit.layout.ContentPane" style="margin:10px">
 		<span id="tweetWidgetDescription" >${description}</span>
-		<div data-dojo-attach-point="messageNode" style="margin:10px"> ${message}		
-		<button type="button" id="searchTweetsButton"
+		<button type="button"
 			data-dojo-attach-point="tweetButton" 
 			data-dojo-attach-event="onclick: _onClickTweet">Search</button>
-		</div>	
+		<div data-dojo-attach-point="messageNode" style="margin:10px">${message}</div>	
 		<div data-dojo-attach-point="receiverNode" style="margin-left:10px">
-			<span id="tweetResults" data-dojo-type="dijit.layout.ContentPane">&{tweetResults}</span>
+			<span data-dojo-attach-point="tweetWidgetResults">${tweetResults}</span>
 		</div>
 	</div>
 	
