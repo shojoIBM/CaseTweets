@@ -2,10 +2,22 @@
 <classpath>
 	<classpathentry kind="src" path="ICMTweetPlugin/src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="lib/httpclient-4.5.1.jar"/>
 	<classpathentry kind="lib" path="lib/httpclient-cache-4.5.1.jar"/>
 	<classpathentry kind="lib" path="lib/httpcore-4.4.3.jar"/>
 	<classpathentry kind="lib" path="lib/navigatorAPI.jar"/>
+	<classpathentry kind="lib" path="lib/httpclient-4.3.2.jar"/>
 	<classpathentry kind="lib" path="lib/javax.servlet-3.0.jar"/>
+	<classpathentry kind="lib" path="ICMTweetPlugin/src/com/ibm/icm/extension/custom/plugin/lib/httpclient-4.3.2.jar"/>
+	<classpathentry kind="lib" path="ICMTweetPlugin/src/com/ibm/icm/extension/custom/plugin/lib/httpclient-cache-4.5.1.jar"/>
+	<classpathentry kind="lib" path="ICMTweetPlugin/src/com/ibm/icm/extension/custom/plugin/lib/httpcore-4.4.3.jar"/>
+	<classpathentry kind="lib" path="ICMTweetPlugin/src/com/ibm/icm/extension/custom/plugin/lib/javax.servlet-3.0.jar"/>
+	<classpathentry kind="lib" path="ICMTweetPlugin/src/com/ibm/icm/extension/custom/plugin/lib/json-simple.jar"/>
+	<classpathentry kind="lib" path="ICMTweetPlugin/lib/httpclient-4.3.2.jar"/>
+	<classpathentry kind="lib" path="ICMTweetPlugin/lib/httpclient-cache-4.5.1.jar"/>
+	<classpathentry kind="lib" path="ICMTweetPlugin/lib/httpcore-4.4.3.jar"/>
+	<classpathentry kind="lib" path="ICMTweetPlugin/lib/javax.servlet-3.0.jar"/>
+	<classpathentry kind="lib" path="ICMTweetPlugin/lib/json-simple.jar"/>
+	<classpathentry kind="lib" path="ICMTweetPlugin/lib/navigatorAPI.jar"/>
+	<classpathentry kind="lib" path="ICMTweetPlugin/src/com/ibm/icm/extension/custom/plugin/lib/navigatorAPI.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

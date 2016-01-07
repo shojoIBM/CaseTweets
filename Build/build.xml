@@ -2,6 +2,7 @@
 	<project name="Tweet Widget" default="all" basedir=".">
 	<property name="plugin.home" value="../ICMTweetPlugin" />
 	<property name="webapp.home" value="../ICMTweetWidget" />
+		
 	<target name="clean">
 		<delete>
 			<fileset dir=".">
@@ -36,8 +37,17 @@
 			<zipfileset dir="../ICMRegistry"  prefix="ICMRegistry">
 			</zipfileset>
 		</zip>
+		<exec executable="cmd">
+			<arg value="/c"/>
+			<arg value="C:\IBM\CaseManagement\configure\configmgr_cl.exe"/>
+			<arg value="execute"/>
+			<arg value="-taskfile"/>
+			<arg value="deployregisterwidgets.2.xml"/>
+			<arg value="-profile"/>
+			<arg value="C:\Profiles\icmprofile521"/>
+		</exec>
 	</target>
 
 	<target name="all" depends="clean,package"></target>
-
+		
 </project>

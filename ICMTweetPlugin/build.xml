@@ -19,7 +19,7 @@
 		<mkdir dir="bin" />
 		<javac target="1.6" source="1.6" destdir="bin" srcdir="src" debug="on" includeantruntime="false">
 			<classpath>
-				<fileset dir="../lib/">
+				<fileset dir="lib">
 				    <include name="**/*.jar" />
 				</fileset>
 			</classpath>
@@ -31,6 +31,7 @@
 		</copy>
 		<jar destfile="ICMTweetPlugin.jar" update="true">
 			<fileset dir="bin" includes="**/*" />
+			<fileset dir="lib" includes="**/*.jar" />
 			<manifest>
 				<attribute name="Plugin-Class" value="com.ibm.icm.extension.custom.plugin.ICMTweetPlugin" />
 				<section name="build">
