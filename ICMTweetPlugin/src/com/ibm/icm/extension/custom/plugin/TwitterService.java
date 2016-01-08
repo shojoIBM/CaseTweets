@@ -3,14 +3,12 @@ package com.ibm.icm.extension.custom.plugin;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.HttpClientBuilder;
 
 import com.ibm.ecm.extension.PluginResponseUtil;
 import com.ibm.ecm.extension.PluginService;
@@ -62,62 +60,39 @@ public class TwitterService extends PluginService {
 			HttpServletResponse response) throws Exception { 
 		
 		JSONResponse jsonResponse = new JSONResponse();
-		//set headers
-//		response.addHeader("Access-Control-Allow-Origin","*");
-//		response.addHeader("Access-Control-Allow-Methods","GET,POST");
-//		response.addHeader("Access-Control-Allow-Headers","Origin, X-Requested-With, Content-Type, Accept");
 		
-		
-//		jsonResponse.put("results", JSONObject.parse(getSampleTweets()));
-		jsonResponse.put("results", "a test");
+		String tweets = getSampleTweets();
+		jsonResponse.put("results", tweets);
 		PluginResponseUtil.writeJSONResponse(request, response, jsonResponse, callbacks, "TwitterService");
 		
 	}
 	
 	public String getSampleTweets() { //public String getSampleTweets(JSONObject twitterCredentials, String outputName, String searchTerms)
-//		StringBuffer retrievedTweets = null;
-		String retrievedTweets = "Something here";
 		
-		//1)use same ICN httpclient jar - nope, didn't work
+		StringBuffer tweets = null;
+		try {
+			
+			URL url = new URL("https://9703b749-0d64-4fc6-a0c2-57af929c69e9:zHZ54TpZym@cdeservice.mybluemix.net:443/api/v1/messages/search?q=IBMECM&size=1");
+			
+			try {
+				HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+				connection.setRequestMethod("GET");
+				
+				BufferedReader incomingText = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+				
+				while(incomingText.readLine() != null) {
+					tweets.append(incomingText);
+				}
+				incomingText.close();
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+			}			
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} 
 		
-		//2) see what class loader is being used
-//		ClassLoader loader = ICMTweetPlugin.class.getClassLoader();
-//		if(loader.getClass() != null) {
-//			String bla = loader.getResource("/com/ibm/icm/extension/custom/plugin/ICMTweetPlugin").toString();
-//		}
+		return tweets.toString();
 		
-//		HttpClient httpClient = HttpClientBuilder.create().build();
-//		String url = "https://9703b749-0d64-4fc6-a0c2-57af929c69e9:zHZ54TpZym@cdeservice.mybluemix.net:443/api/v1/messages/search?q=IBMECM&size=1";
-//		HttpGet httpGet = new HttpGet(url);
-//		
-//		HttpResponse response = null;
-//		
-//		
-//		try {
-//			httpGet.addHeader("Access-Control-Allow-Origin","*");
-//			httpGet.addHeader("Access-Control-Allow-Methods","GET,POST");
-//			httpGet.addHeader("Access-Control-Allow-Headers","Origin, X-Requested-With, Content-Type, Accept");
-//			
-//			response = httpClient.execute(httpGet);
-//			
-//			BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
-//			String inputLine;
-//	        retrievedTweets = new StringBuffer();
-//	 
-//	        while ((inputLine = reader.readLine()) != null) {
-//	        	retrievedTweets.append(inputLine);
-//	        }
-//	        reader.close();
-//			
-//		} 
-//		catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//		finally {
-//			
-//		}
-		
-//		return retrievedTweets.toString();
-		return retrievedTweets;
 	}
 }
