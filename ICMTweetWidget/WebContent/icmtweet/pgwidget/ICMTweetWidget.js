@@ -22,8 +22,7 @@ define([
 		
 		_onClickTweet: function() {
 			this.tweetButton.style.background = "red";
-			this.tweetResults = "These are the tweet results";
-			this.tweetWidgetResults.innerText = this.tweetResults;
+			
 			//dojo.byId("tweetResults").innerText = "These are the tweet results";
 			
 			//using a call to ICN plugin service
@@ -34,6 +33,8 @@ define([
 				requestCompleteCallback: lang.hitch(this, function(response) {
 					//do something after the results have been retrieved.. the results are contained in the response param
 					this.tweetButton.style.background = "green";
+					this.tweetResults = "These are the tweet results";
+					this.tweetWidgetResults.innerText = this.tweetResults + ": ->" + response.results;
 				}),
 				requestFailedCallback: function(response){
 					var something = response;
