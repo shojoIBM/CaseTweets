@@ -2,12 +2,12 @@ package com.ibm.icm.extension.custom.plugin;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.*;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +20,7 @@ import com.ibm.ecm.extension.PluginServiceCallbacks;
 import com.ibm.ecm.json.JSONResponse;
 import com.ibm.ecm.util.*;
 import com.ibm.json.java.JSONObject;
+import com.sun.org.apache.xml.internal.security.utils.Base64;
 
 
 public class TwitterService extends PluginService {
@@ -71,22 +72,22 @@ public class TwitterService extends PluginService {
 		
 	}
 	
-	public JSONObject getSampleTweets() { //public String getSampleTweets(JSONObject twitterCredentials, String outputName, String searchTerms)
+	public String getSampleTweets() { //public String getSampleTweets(JSONObject twitterCredentials, String outputName, String searchTerms)
 		
-		
-		JSONObject twitterServiceResults = new JSONObject();
-		twitterServiceResults.put("results", "{nothing here}");
+		String twitterServiceResults = "";
 		try {
 			
 			URL url = new URL("https://cdeservice.mybluemix.net:443/api/v1/messages/search?q=%23IBMAnalytics&size=5");
 //			URL url = new URL("https://9703b749-0d64-4fc6-a0c2-57af929c69e9:zHZ54TpZym@cdeservice.mybluemix.net:443/api/v1/messages/search?q=IBM&size=1");
 			
 			try {
-				HttpsURLConnection bluemixConnection = (HttpsURLConnection) url.openConnection();
-//				String credentials = URLEncoder.encode("OTcwM2I3NDktMGQ2NC00ZmM2LWEwYzItNTdhZjkyOWM2OWU5OnpIWjU0VHBaeW0=", "utf-8");
+				HttpURLConnection bluemixConnection = (HttpURLConnection) url.openConnection();
+//				String credentials = "9703b749-0d64-4fc6-a0c2-57af929c69e9:zHZ54TpZym";
+				String credentials = "OTcwM2I3NDktMGQ2NC00ZmM2LWEwYzItNTdhZjkyOWM2OWU5OnpIWjU0VHBaeW0=";
 				
-//				bluemixConnection.setRequestProperty("Authorization","Basic " + credentials);
-				bluemixConnection.setRequestProperty("Authorization","Basic OTcwM2I3NDktMGQ2NC00ZmM2LWEwYzItNTdhZjkyOWM2OWU5OnpIWjU0VHBaeW0=");
+				String encodedCredentials = Base64.encode(credentials.getBytes());
+				bluemixConnection.setRequestProperty("Authorization","Basic " + credentials);
+				
 				bluemixConnection.setRequestMethod("GET");
 				
 				int responseCode = bluemixConnection.getResponseCode();
@@ -105,8 +106,7 @@ public class TwitterService extends PluginService {
 						incomingTweets.append(line);
 					}
 					incomingText.close();
-					
-					return (JSONObject) twitterServiceResults.put("results", incomingTweets.toString());
+					twitterServiceResults = incomingTweets.toString();
 				}
 				
 			} catch (IOException e) {
