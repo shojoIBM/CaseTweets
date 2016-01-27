@@ -6,19 +6,15 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLEncoder;
-import java.util.*;
 
-import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.bind.DatatypeConverter;
 
 import com.ibm.ecm.extension.PluginResponseUtil;
 import com.ibm.ecm.extension.PluginService;
 import com.ibm.ecm.extension.PluginServiceCallbacks;
 import com.ibm.ecm.json.JSONResponse;
-import com.ibm.ecm.util.*;
+import com.ibm.json.java.JSONArray;
 import com.ibm.json.java.JSONObject;
 import com.sun.org.apache.xml.internal.security.utils.Base64;
 
@@ -65,8 +61,6 @@ public class TwitterService extends PluginService {
 			HttpServletResponse response) throws Exception { 
 		
 		JSONResponse jsonResponse = new JSONResponse();
-		
-//		String tweets = getSampleTweets();
 		jsonResponse.put("results", getSampleTweets());
 		PluginResponseUtil.writeJSONResponse(request, response, jsonResponse, callbacks, "TwitterService");
 		
@@ -77,9 +71,8 @@ public class TwitterService extends PluginService {
 		String twitterServiceResults = "";
 		try {
 			
-			URL url = new URL("https://cdeservice.mybluemix.net:443/api/v1/messages/search?q=%23IBMAnalytics&size=5");
-//			URL url = new URL("https://9703b749-0d64-4fc6-a0c2-57af929c69e9:zHZ54TpZym@cdeservice.mybluemix.net:443/api/v1/messages/search?q=IBM&size=1");
-			
+			URL url = new URL("https://cdeservice.mybluemix.net:443/api/v1/messages/search?q=%23IBMAnalytics&size=10");
+
 			try {
 				HttpURLConnection bluemixConnection = (HttpURLConnection) url.openConnection();
 //				String credentials = "9703b749-0d64-4fc6-a0c2-57af929c69e9:zHZ54TpZym";
@@ -96,17 +89,31 @@ public class TwitterService extends PluginService {
 				System.out.println("Response message: " + bluemixConnection.getResponseMessage());
 				
 				if(responseCode == 200) {
-					StringBuffer incomingTweets = new StringBuffer();
-					
-					InputStreamReader input = new InputStreamReader(bluemixConnection.getInputStream(), "utf-8"); 
-					String encoding = input.getEncoding();
+					InputStreamReader input = new InputStreamReader(bluemixConnection.getInputStream(), "utf-8");
 					BufferedReader incomingText = new BufferedReader(input);
+					
+					StringBuffer incomingTweets = new StringBuffer();
 					String line = "";
 					while((line = incomingText.readLine()) != null) {
 						incomingTweets.append(line);
 					}
 					incomingText.close();
-					twitterServiceResults = incomingTweets.toString();
+					
+					JSONObject tweetResults = JSONObject.parse(incomingTweets.toString());
+					JSONArray allTweets = (JSONArray)tweetResults.get("tweets");
+					
+					for(Object t : allTweets) {
+						JSONObject oneTweetObject = (JSONObject) t;
+						JSONObject tweetMessage = (JSONObject) oneTweetObject.get("message");
+						
+						//TWEET AUTHOR
+						JSONObject tweetGenerator = (JSONObject) tweetMessage.get("generator");
+						twitterServiceResults += "@" + tweetGenerator.get("displayName");
+						//TWEET
+						twitterServiceResults += " tweeted \"" + tweetMessage.get("body") + "\"\n";
+						
+					}
+					
 				}
 				
 			} catch (IOException e) {

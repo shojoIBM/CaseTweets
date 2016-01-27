@@ -7,13 +7,18 @@ define([
 	"icm/base/BasePageWidget",
 	"icm/base/_BaseWidget",
 	"ecm/model/Request",
+	"ecm/widget/HoverHelp",
 	"dojo/text!./templates/ICMTweetWidget.html",
 	"dijit/form/Button"
-], function(declare, lang, json, jsonp, xhr, BasePageWidget, _BaseWidget, Request, template){
+], function(declare, lang, json, jsonp, xhr, BasePageWidget, _BaseWidget, Request, HoverHelp, template){
 	return declare("icmtweet.pgwidget.ICMTweetWidget", [_BaseWidget, BasePageWidget], {
 		templateString: template,
-		description: "some OTHER random widget",
-		message: "Please input the hashtag you'd like to search for",
+		description: "BlueMix Twitter Insights",
+		
+		
+		//SEARCH BOX
+		message: "Please_input the hashtag you'd like to search for",
+		
 		tweetResults: "",
 		
 		postCreate: function(){

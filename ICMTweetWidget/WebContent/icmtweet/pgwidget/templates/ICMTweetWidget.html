@@ -1,13 +1,38 @@
-<div class="icmICMTweetWidget" data-dojo-type="dijit.layout.BorderContainer">	
+<div class="icmICMTweetWidget" data-dojo-type="dijit.layout.BorderContainer">
+	
 	<div data-dojo-type="dijit.layout.ContentPane" style="margin:10px">
 		<span id="tweetWidgetDescription" >${description}</span>
-		<button type="button"
-			data-dojo-attach-point="tweetButton" 
-			data-dojo-attach-event="onclick: _onClickTweet">Search</button>
-		<div data-dojo-attach-point="messageNode" style="margin:10px">${message}</div>	
+		<div data-dojo-attach-point="searchInputArea">
+			<table role="presentation" class="propertyTable">
+				<tr>
+					<td class="propertyRowLabel">
+						<span class="required">*</span>
+						<label for="${id}_hashtag">Search term: </label>&nbsp;
+							<div data-dojo-type="ecm/widget/HoverHelp" 
+								 data-dojo-attach-point="hashtagSearchURIHoverHelp" 
+								 message=${message}>
+							</div>				
+ 					</td>
+					<td class="propertyRowValue">
+						<div id="${id}_hashtagOUTER)" data-dojo-attach-point="hashtagSearchURIHoverHelp" ></div>
+							<input class="dijitReset dijitInputInner" 
+								   data-dojo-attach-point="textbox,focusNode" 
+								   autocomplete="off" type="text" tabindex="0" id="${id}_hashtag" 
+								   aria-required="true" maxlength="255" minlength="undefined" value="" 
+								   role="textbox" aria-invalid="true" title="Search term">
+					</td>
+				</tr>
+			</table>
+		</div>
+		
+		<button type="button" data-dojo-attach-point="tweetButton" 
+			data-dojo-attach-event="onclick: _onClickTweet" style="float:right; ">Search</button>
+	</div>
+	
+	<div data-dojo-type="dijit.layout.ContentPane" style="margin:10px">		
 		<div data-dojo-attach-point="receiverNode" style="margin-left:10px">
 			<span data-dojo-attach-point="tweetWidgetResults">${tweetResults}</span>
-		</div>
+		</div>		
 	</div>
 	
 </div>
