@@ -1,38 +1,35 @@
 <div class="icmICMTweetWidget" data-dojo-type="dijit.layout.BorderContainer">
 	
-	<div data-dojo-type="dijit.layout.ContentPane" style="margin:10px">
-		<span id="tweetWidgetDescription" >${description}</span>
-		<div data-dojo-attach-point="searchInputArea">
-			<table role="presentation" class="propertyTable">
+	<div data-dojo-type="dijit.layout.ContentPane" style="margin:10px 0px 0px 10px">${description}
+		<table role="presentation" class="propertyTable">
 				<tr>
 					<td class="propertyRowLabel">
 						<span class="required">*</span>
 						<label for="${id}_hashtag">Search term: </label>&nbsp;
 							<div data-dojo-type="ecm/widget/HoverHelp" 
-								 data-dojo-attach-point="hashtagSearchURIHoverHelp" 
-								 message=${message}>
+								 message="Please input the hashtag you'd like to search for">
 							</div>				
  					</td>
 					<td class="propertyRowValue">
-						<div id="${id}_hashtagOUTER)" data-dojo-attach-point="hashtagSearchURIHoverHelp" ></div>
+						<div id="${id}_hashtagOUTER)" data-dojo-attach-point="hashtagSearchURIHoverHelp" style="border-style:solid; border-width:1px; border-color:#f2f2f2">
 							<input class="dijitReset dijitInputInner" 
-								   data-dojo-attach-point="textbox,focusNode" 
+								   data-dojo-attach-point="hashtagSearch" 
 								   autocomplete="off" type="text" tabindex="0" id="${id}_hashtag" 
 								   aria-required="true" maxlength="255" minlength="undefined" value="" 
 								   role="textbox" aria-invalid="true" title="Search term">
+						</div>
 					</td>
 				</tr>
 			</table>
-		</div>
 		
 		<button type="button" data-dojo-attach-point="tweetButton" 
 			data-dojo-attach-event="onclick: _onClickTweet" style="float:right; ">Search</button>
 	</div>
 	
 	<div data-dojo-type="dijit.layout.ContentPane" style="margin:10px">		
-		<div data-dojo-attach-point="receiverNode" style="margin-left:10px">
-			<span data-dojo-attach-point="tweetWidgetResults">${tweetResults}</span>
-		</div>		
+		
+		<span data-dojo-attach-point="tweetWidgetResults">${tweetResults}</span>
+		
 	</div>
 	
 </div>

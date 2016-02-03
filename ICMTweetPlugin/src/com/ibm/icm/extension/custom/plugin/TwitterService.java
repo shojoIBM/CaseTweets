@@ -9,6 +9,7 @@ import java.net.URL;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.bind.DatatypeConverter;
 
 import com.ibm.ecm.extension.PluginResponseUtil;
 import com.ibm.ecm.extension.PluginService;
@@ -61,32 +62,32 @@ public class TwitterService extends PluginService {
 			HttpServletResponse response) throws Exception { 
 		
 		JSONResponse jsonResponse = new JSONResponse();
-		jsonResponse.put("results", getSampleTweets());
+		jsonResponse.put("results", getSampleTweets(request.getParameter("searchTerm")));
 		PluginResponseUtil.writeJSONResponse(request, response, jsonResponse, callbacks, "TwitterService");
 		
 	}
 	
-	public String getSampleTweets() { //public String getSampleTweets(JSONObject twitterCredentials, String outputName, String searchTerms)
+	public String getSampleTweets(String searchTerm) { //public String getSampleTweets(JSONObject twitterCredentials, String outputName, String searchTerms)
 		
 		String twitterServiceResults = "";
 		try {
 			
-			URL url = new URL("https://cdeservice.mybluemix.net:443/api/v1/messages/search?q=%23IBMAnalytics&size=10");
+			URL url = new URL("https://cdeservice.mybluemix.net:443/api/v1/messages/search?q=%23" + searchTerm +"&size=10");
 
 			try {
 				HttpURLConnection bluemixConnection = (HttpURLConnection) url.openConnection();
-//				String credentials = "9703b749-0d64-4fc6-a0c2-57af929c69e9:zHZ54TpZym";
-				String credentials = "OTcwM2I3NDktMGQ2NC00ZmM2LWEwYzItNTdhZjkyOWM2OWU5OnpIWjU0VHBaeW0=";
+				String credentials = "9703b749-0d64-4fc6-a0c2-57af929c69e9:zHZ54TpZym";
+				byte[] message = credentials.getBytes("UTF-8");
+				String encodedCredentials = DatatypeConverter.printBase64Binary(message);
 				
-				String encodedCredentials = Base64.encode(credentials.getBytes());
-				bluemixConnection.setRequestProperty("Authorization","Basic " + credentials);
+				bluemixConnection.setRequestProperty("Authorization","Basic " + encodedCredentials);
 				
 				bluemixConnection.setRequestMethod("GET");
 				
 				int responseCode = bluemixConnection.getResponseCode();
-				System.out.println("Response code: " + responseCode);
-				System.out.println("Error: " + bluemixConnection.getErrorStream());
-				System.out.println("Response message: " + bluemixConnection.getResponseMessage());
+//				System.out.println("Response code: " + responseCode);
+//				System.out.println("Error: " + bluemixConnection.getErrorStream());
+//				System.out.println("Response message: " + bluemixConnection.getResponseMessage());
 				
 				if(responseCode == 200) {
 					InputStreamReader input = new InputStreamReader(bluemixConnection.getInputStream(), "utf-8");
@@ -110,7 +111,7 @@ public class TwitterService extends PluginService {
 						JSONObject tweetGenerator = (JSONObject) tweetMessage.get("generator");
 						twitterServiceResults += "@" + tweetGenerator.get("displayName");
 						//TWEET
-						twitterServiceResults += " tweeted \"" + tweetMessage.get("body") + "\"\n";
+						twitterServiceResults += " tweeted \"" + tweetMessage.get("body") + "\"\n\n";
 						
 					}
 					
